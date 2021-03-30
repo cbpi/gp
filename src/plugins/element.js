@@ -7,6 +7,7 @@
  * @FilePath: \vue-mongodb-test\src\plugins\element.js
  */
 import {
+  ElDatePicker,
   ElButton,
   ElTabPane,
   ElTable,
@@ -33,4 +34,5 @@ export default (app) => {
   app.use(ElInputNumber)
   app.use(ElPopconfirm)
   app.use(ElDialog)
+  app.use(ElDatePicker)
 }

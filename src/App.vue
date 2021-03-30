@@ -49,13 +49,27 @@
         <el-input v-model="formLabelAlign.max"></el-input>
       </el-form-item>
       <el-form-item label="最高值日期">
-        <el-input v-model="formLabelAlign.date"></el-input>
+        <!-- <el-input v-model="formLabelAlign.date"></el-input> -->
+        <el-date-picker
+          v-model="formLabelAlign.date"
+          type="date"
+          placeholder="选择日期"
+          format="YYYY-MM-DD"
+        >
+        </el-date-picker>
       </el-form-item>
       <el-form-item label="2年最低值">
         <el-input v-model="formLabelAlign.min"></el-input>
       </el-form-item>
       <el-form-item label="最低值日期">
-        <el-input v-model="formLabelAlign.mindate"></el-input>
+        <!-- <el-input v-model="formLabelAlign.mindate"></el-input> -->
+        <el-date-picker
+          v-model="formLabelAlign.mindate"
+          type="date"
+          placeholder="选择日期"
+          format="YYYY-MM-DD"
+        >
+        </el-date-picker>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -69,6 +83,7 @@
 
 <script>
 import { getList, addItem, deleteById, updateById } from '@/api/api.js'
+import dayjs from 'dayjs'
 
 export default {
   data() {
@@ -102,8 +117,8 @@ export default {
         num: this.formLabelAlign.num,
         max: this.formLabelAlign.max,
         min: this.formLabelAlign.min,
-        date: this.formLabelAlign.date,
-        mindate: this.formLabelAlign.mindate
+        date: dayjs(this.formLabelAlign.date).format('YYYY-MM-DD'),
+        mindate: dayjs(this.formLabelAlign.mindate).format('YYYY-MM-DD')
       }
       addItem(params)
         .then(() => {
@@ -168,8 +183,8 @@ export default {
         num: this.formLabelAlign.num,
         max: this.formLabelAlign.max,
         min: this.formLabelAlign.min,
-        date: this.formLabelAlign.date,
-        mindate: this.formLabelAlign.mindate
+        date: dayjs(this.formLabelAlign.date).format('YYYY-MM-DD'),
+        mindate: dayjs(this.formLabelAlign.mindate).format('YYYY-MM-DD')
       }
       updateById(this.formLabelAlign._id, params)
         .then((result) => {
@@ -206,5 +221,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.el-date-editor.el-input {
+  width: 100% !important;
 }
 </style>
