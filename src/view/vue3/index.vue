@@ -77,6 +77,7 @@
 import { getList, addItem, deleteById, updateById } from '@/api/api.js'
 import { onMounted, reactive, ref } from 'vue'
 import dayjs from 'dayjs'
+import { ElMessage } from 'element-plus'
 
 export default {
   setup(props, context) {
@@ -126,7 +127,7 @@ export default {
       }
       addItem(params)
         .then(() => {
-          this.$message({
+          ElMessage.success({
             message: '新增成功',
             type: 'success'
           })
@@ -148,7 +149,7 @@ export default {
       deleteById(row._id)
         .then((result) => {
           if (result.code === 200) {
-            this.$message({
+            ElMessage.success({
               message: '删除成功',
               type: 'success'
             })
@@ -186,9 +187,8 @@ export default {
       }
       updateById(state.formLabelAlign._id, params)
         .then((result) => {
-          console.log(result)
           if (result.code === 200) {
-            this.$message({
+            ElMessage.success({
               message: '修改成功',
               type: 'success'
             })
