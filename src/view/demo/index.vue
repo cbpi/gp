@@ -1,5 +1,76 @@
 <template>
-  <div><router-view></router-view></div>
+  <el-button type="primary" icon="el-icon-edit" @click="showVisible">新增</el-button>
+  <el-table :data="tableData" style="width: 100%">
+    <el-table-column prop="name" label="股票名称"> </el-table-column>
+    <el-table-column prop="num" label="股票代码"> </el-table-column>
+    <el-table-column label="两年最高值">
+      <template #default="scope">
+        <span style="color: #e00000;font-weight: bold">{{ scope.row.max }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column prop="date" label="最高值日期"> </el-table-column>
+    <el-table-column label="两年最低值">
+      <template #default="scope">
+        <span style="color: rgb(13 165 45);font-weight: bold">{{ scope.row.min }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column prop="mindate" label="最低值日期"> </el-table-column>
+    <el-table-column align="right">
+      <template #default="scope">
+        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
+        <el-popconfirm
+          title="这是一段内容确定删除吗？"
+          @confirm="handleDelete(scope.$index, scope.row)"
+        >
+          <template #reference>
+            <el-button size="mini" type="danger">删除</el-button>
+          </template>
+        </el-popconfirm>
+      </template>
+    </el-table-column>
+  </el-table>
+  <el-dialog :title="title" v-model="dialogTableVisible">
+    <el-form label-width="100px" :model="formLabelAlign" ref="formLabelAlign">
+      <el-form-item label="股票名称">
+        <el-input v-model="formLabelAlign.name"></el-input>
+      </el-form-item>
+      <el-form-item label="股票代码">
+        <el-input v-model="formLabelAlign.num"></el-input>
+      </el-form-item>
+      <el-form-item label="2年最高值">
+        <el-input v-model="formLabelAlign.max"></el-input>
+      </el-form-item>
+      <el-form-item label="最高值日期">
+        <!-- <el-input v-model="formLabelAlign.date"></el-input> -->
+        <el-date-picker
+          v-model="formLabelAlign.date"
+          type="date"
+          placeholder="选择日期"
+          format="YYYY-MM-DD"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="2年最低值">
+        <el-input v-model="formLabelAlign.min"></el-input>
+      </el-form-item>
+      <el-form-item label="最低值日期">
+        <!-- <el-input v-model="formLabelAlign.mindate"></el-input> -->
+        <el-date-picker
+          v-model="formLabelAlign.mindate"
+          type="date"
+          placeholder="选择日期"
+          format="YYYY-MM-DD"
+        >
+        </el-date-picker>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogTableVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
